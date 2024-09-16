@@ -10,7 +10,7 @@ balanceRouter.use(validateToken);
 
 balanceRouter.post('/transactions', validateSchema(newBalanceSchema), postTransation);
 balanceRouter.get('/transactions', getTransations);
-balanceRouter.put('/transactions/:id', putTransation);
+balanceRouter.put('/transactions/:id', validateSchema(newBalanceSchema), putTransation);
 balanceRouter.delete('/transactions/:id', putTransation);
 
 export default balanceRouter;
