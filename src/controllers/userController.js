@@ -1,18 +1,10 @@
 import 'dotenv/config';
 import bcrypt from "bcrypt";
 import { db } from "../config/database.js";
-import { userLoginSchema, userRegisterSchema } from "../schemas/userSchema.js";
 import jwt from "jsonwebtoken"
 
 export const userRegister = async (req, res) => {
   const { name, email, password } = req.body;
-
-  const validation = userRegisterSchema.validate(req.body, { abortEarly: false });
-  
-  if (validation.error) {
-    const errors = validation.error.details.map((detail) => detail.message);
-    return res.status(422).send(errors);
-  }
 
   try {
 		const user = await db.collection("users").findOne({ email });
@@ -25,17 +17,11 @@ export const userRegister = async (req, res) => {
   } catch (err) {
     return res.status(500).send(err.message);
   }
-};
+}
 
 export const userLogin = async (req, res) => {
   const { email, password } = req.body;
 
-  const validation = userLoginSchema.validate(req.body, { abortEarly: false });
-  
-  if (validation.error) {
-    const errors = validation.error.details.map((detail) => detail.message);
-    return res.status(422).send(errors);
-  }
   try {
     const user = await db.collection('users').findOne({ email });
     
@@ -48,4 +34,4 @@ export const userLogin = async (req, res) => {
   } catch (err) {
     return res.status(500).send(err.message);
   }
-};
+}
