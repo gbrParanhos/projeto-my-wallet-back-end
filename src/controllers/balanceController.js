@@ -12,7 +12,7 @@ export const postTransation = async (req, res) => {
 }
 
 export const getTransations = async (req, res) => {
-  const page = req.query.pagina || 1;
+  const page = req.query.page || 1;
   if ( page < 0 ) res.sendStatus(400);
   const limit = 10;
   const start = (page - 1) * limit;
